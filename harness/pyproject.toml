@@ -1,0 +1,13 @@
+[project]
+name = "harness"
+version = "0.0.1"
+description = "General-purpose agent harness. Built one stage at a time."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
