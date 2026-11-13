@@ -29,10 +29,10 @@ class PretendProvider:
 
     def complete(self, messages: list[str]) -> Reply:
         """Return the next scripted line.
-
         messages is the conversation so far. Stage 1 does not read it.
         The argument is here so the real door can use the same call later.
         """
-        raise NotImplementedError(
-            "Your job: return Reply(next scripted line), or raise ScriptFinished."
-        )
+        if not self._script:
+            raise ScriptFinished()
+        text = self._script.pop(0)
+        return Reply(text)
