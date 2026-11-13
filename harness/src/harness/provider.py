@@ -1,12 +1,18 @@
-"""Stage 1 contract: a door the loop can call without the internet.
+"""Doors the loop can call.
 
-The real Antigravity subscription door comes later, and it must fit this
-same shape. You implement PretendProvider.complete. Do not add network code.
+PretendProvider answers from a written script. AntigravityProvider answers
+by running the local agy command.
 """
+
+import subprocess
 
 
 class ScriptFinished(Exception):
     """Raised when the pretend door has no scripted lines left."""
+
+
+class BridgeError(Exception):
+    """Raised when agy does not return a reply."""
 
 
 class Reply:
@@ -17,22 +23,38 @@ class Reply:
 
 
 class PretendProvider:
-    """A door that replies from a written script, one line per call.
-
-    script is a list of strings. The first complete() call returns the first
-    string. The next call returns the next string. When the list is used up,
-    complete() raises ScriptFinished.
-    """
+    """A door that replies from a written script, one line per call."""
 
     def __init__(self, script: list[str]) -> None:
         self._script = list(script)
 
     def complete(self, messages: list[str]) -> Reply:
-        """Return the next scripted line.
-        messages is the conversation so far. Stage 1 does not read it.
-        The argument is here so the real door can use the same call later.
-        """
+        """Return the next scripted line."""
         if not self._script:
             raise ScriptFinished()
         text = self._script.pop(0)
+        return Reply(text)
+
+
+class AntigravityProvider:
+    """A door that sends the last message to agy and returns the printed sentence."""
+
+    def __init__(self, command: list[str] | None = None) -> None:
+        self._command = ["agy", "-p"] if command is None else command
+
+    def complete(self, messages: list[str]) -> Reply:
+        if not messages:
+            raise BridgeError("no message to send")
+        completed = subprocess.run(
+            [*self._command, messages[-1]],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if completed.returncode != 0:
+            detail = completed.stderr.strip() or "agy failed"
+            raise BridgeError(detail)
+        text = completed.stdout.strip()
+        if not text:
+            raise BridgeError("agy returned an empty reply")
         return Reply(text)
