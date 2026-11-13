@@ -13,4 +13,4 @@ This is the timeline. It is an order, not a calendar. We do not pick dates until
 
 Doors that stay shut: book, film, speech, Colab, your own model.
 
-Each door has its own low-level design. Only door 1 is written, in `LLD-stage-1.md`. The next low-level design is written after door 1 passes.
+Door 1 is done. Its low-level design is `LLD-stage-1.md`. Door 2 is open. Its low-level design is `LLD-stage-2.md`. The first action is to find the bridge, before any new Python.
