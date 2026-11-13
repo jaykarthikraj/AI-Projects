@@ -2,29 +2,21 @@
 
 Pictures: `sdlc-05-real-plug.jpg` and `sdlc-06-find-bridge.jpg`.
 
-## What this door is
+## What we measured
 
-The pretend door returns lines we wrote. This door sends one message to the Antigravity subscription already on your laptop and returns one real sentence.
-
-Adi named the helper program Gemini Bridge. It runs on the laptop that is signed into Antigravity. Our harness talks to that program. He said he would share it. We use his program. We do not write a second one from guesswork.
-
-## Your job right now
-
-Find the bridge. Do not add Python yet.
-
-In PowerShell, run:
+On your laptop, this command returned the sentence `hello from the bridge`:
 
 ```powershell
-where.exe agy
+agy -p "Reply with exactly these four words: hello from the bridge"
 ```
 
-`agy` is the Antigravity command-line tool. A good result is a file path. If Windows says it cannot find `agy`, paste that line to me and stop.
+`agy` is the Antigravity command at `C:\Users\karth\AppData\Local\agy\bin\agy.exe`. That command is our bridge. Adi's separate program is not required.
 
-Then answer one question: did Adi send you a folder or file called Gemini Bridge? Look in your mail, chat with Adi, and Downloads. If you find it, paste the folder path. If you cannot find it, say "not found" and stop.
+## What you add
 
-## What we build after the bridge is found
+A second door, `AntigravityProvider`, in `src/harness/provider.py`. It has the same call as the pretend door: `complete(messages) -> Reply`. It runs `agy -p` with the last message and wraps the printed sentence in a `Reply`.
 
-A second door with the same call you already know: `complete(messages) -> Reply`. It sends the last message to the bridge and wraps the real sentence in a `Reply`. The four pretend-door tests stay as they are. The new check is one manual call on your signed-in laptop.
+The four pretend-door tests stay. New tests call a stand-in command, so they do not use the subscription. One manual command calls the real `agy`.
 
 ## Out of this door
 

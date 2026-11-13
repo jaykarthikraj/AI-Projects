@@ -5,7 +5,7 @@ This is the timeline. It is an order, not a calendar. We do not pick dates until
 | Door | You build | Done when | Testing effort |
 | --- | --- | --- | --- |
 | 1. Pretend door | `PretendProvider.complete` | Four offline tests pass | 4 automated tests. No manual test. |
-| 2. Subscription plug | One call to the local Antigravity bridge | One real reply comes back on the signed-in laptop | 1 manual check. We do not guess the wire shape. |
+| 2. Subscription plug | `AntigravityProvider.complete` calls `agy -p` | Stand-in tests pass, and one manual call returns a real sentence | 3 automated tests with a stand-in command. 1 manual call to `agy`. |
 | 3. One PDF | A folder turns one PDF into text cards with page numbers | A test finds the words on page 12 | 2 tests on a tiny fixture PDF. |
 | 4. The loop | Ask, run one read tool, stop on plain words | A scripted conversation reads one file and stops | 1 scripted multi-step test. |
 | 5. Kill and resume | Write the conversation to a notebook and continue after a kill | Resume continues, and a finished side effect does not run twice | 1 kill-and-resume test. |
