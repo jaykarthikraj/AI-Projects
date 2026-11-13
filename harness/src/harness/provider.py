@@ -1,14 +1,15 @@
-"""Doors the loop can call.
+"""Providers the loop can call.
 
-PretendProvider answers from a written script. AntigravityProvider answers
-by running the local agy command.
+PretendProvider is the Phase 1 mock provider. It answers from a written script.
+AntigravityProvider is the Phase 2 subscription provider. It answers by running
+the local agy command.
 """
 
 import subprocess
 
 
 class ScriptFinished(Exception):
-    """Raised when the pretend door has no scripted lines left."""
+    """Raised when the mock provider has no scripted lines left."""
 
 
 class BridgeError(Exception):
@@ -16,14 +17,14 @@ class BridgeError(Exception):
 
 
 class Reply:
-    """What a door returns. Stage 1 is plain text only."""
+    """What a provider returns. These phases return plain text only."""
 
     def __init__(self, text: str) -> None:
         self.text = text
 
 
 class PretendProvider:
-    """A door that replies from a written script, one line per call."""
+    """Phase 1 mock provider. It replies from a written script, one line per call."""
 
     def __init__(self, script: list[str]) -> None:
         self._script = list(script)
@@ -37,7 +38,7 @@ class PretendProvider:
 
 
 class AntigravityProvider:
-    """A door that sends the last message to agy and returns the printed sentence."""
+    """Phase 2 subscription provider. It sends the last message to agy and returns the printed sentence."""
 
     def __init__(self, command: list[str] | None = None) -> None:
         self._command = ["agy", "-p"] if command is None else command

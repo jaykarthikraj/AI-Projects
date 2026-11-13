@@ -1,1 +1,1 @@
-"""The harness package. Stage 1 is only the pretend door."""
+"""The harness package. Phase 1 is the mock provider. Phase 2 is the subscription provider."""
